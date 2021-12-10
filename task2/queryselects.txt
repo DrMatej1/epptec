@@ -1,0 +1,13 @@
+SELECT client.id, client.name
+FROM client
+JOIN balance
+ON client.id = balance.clientid
+WHERE (SELECT SUM(balance.principal) FROM balance WHERE client.id = client.id) > c;
+
+
+SELECT client.id, client.name, (SELECT SUM(balance.amount) FROM balance WHERE client.id = client.id) AS total 
+FROM client 
+JOIN balance 
+ON client.id = balance.clientid 
+ORDER BY total ASC 
+LIMIT 10;
